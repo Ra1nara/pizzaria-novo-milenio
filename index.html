@@ -1,0 +1,393 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Pizzaria Novo Milênio — Cardápio, delivery e retirada na Bela Vista</title>
+<meta name="description" content="Pizzaria Novo Milênio — R. Paim, 211, Loja 19, Bela Vista, São Paulo. Cardápio com 55 sabores em Grande e Broto. Pedidos pelo WhatsApp (11) 96224-8186.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@75..125,400..900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/estilo.css">
+</head>
+<body>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="i-wa" viewBox="0 0 24 24"><path d="M12 2.2a9.8 9.8 0 0 0-8.4 14.8L2.2 21.8l4.9-1.3A9.8 9.8 0 1 0 12 2.2Zm0 1.8a8 8 0 1 1-4.2 14.8l-.3-.2-2.9.8.8-2.8-.2-.3A8 8 0 0 1 12 4Z"/><path d="M9.1 7.3c-.2-.4-.4-.4-.6-.4h-.5c-.2 0-.5.1-.7.3-.3.3-.9.9-.9 2.2s.9 2.5 1 2.7c.1.2 1.8 2.9 4.5 4 2.2.9 2.7.7 3.2.7.5-.1 1.5-.6 1.7-1.2.2-.6.2-1.1.2-1.2-.1-.1-.2-.2-.5-.3l-1.7-.8c-.2-.1-.4-.1-.6.1l-.8 1c-.1.2-.3.2-.5.1-.3-.1-1.1-.4-2-1.2-.8-.7-1.3-1.5-1.4-1.8-.2-.3 0-.4.1-.5l.4-.4.2-.4v-.4l-.9-2Z"/></symbol>
+  <symbol id="i-tel" viewBox="0 0 24 24"><path d="M6.6 10.8a15.1 15.1 0 0 0 6.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.1.4 2.3.6 3.6.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1A17 17 0 0 1 3 4c0-.6.4-1 1-1h3.5c.6 0 1 .4 1 1 0 1.3.2 2.5.6 3.6.1.3 0 .7-.2 1l-2.3 2.2Z"/></symbol>
+  <symbol id="i-pin" viewBox="0 0 24 24"><path d="M12 2a7 7 0 0 0-7 7c0 5.3 7 13 7 13s7-7.7 7-13a7 7 0 0 0-7-7Zm0 9.5a2.5 2.5 0 1 1 0-5 2.5 2.5 0 0 1 0 5Z"/></symbol>
+  <symbol id="i-busca" viewBox="0 0 24 24"><path d="M10.5 3a7.5 7.5 0 0 1 5.96 12.05l4.25 4.24-1.42 1.42-4.24-4.25A7.5 7.5 0 1 1 10.5 3Zm0 2a5.5 5.5 0 1 0 0 11 5.5 5.5 0 0 0 0-11Z"/></symbol>
+  <symbol id="i-insta" viewBox="0 0 24 24"><path d="M12 7.3a4.7 4.7 0 1 0 0 9.4 4.7 4.7 0 0 0 0-9.4Zm0 7.7a3 3 0 1 1 0-6 3 3 0 0 1 0 6Zm4.9-8.9a1.1 1.1 0 1 0 0 2.2 1.1 1.1 0 0 0 0-2.2ZM12 2.5c-2.6 0-2.9 0-3.9.1-3.5.2-5.4 2.1-5.6 5.6-.1 1-.1 1.3-.1 3.9s0 2.9.1 3.9c.2 3.5 2.1 5.4 5.6 5.6 1 .1 1.3.1 3.9.1s2.9 0 3.9-.1c3.5-.2 5.4-2.1 5.6-5.6.1-1 .1-1.3.1-3.9s0-2.9-.1-3.9c-.2-3.5-2.1-5.4-5.6-5.6-1-.1-1.3-.1-3.9-.1Zm0 1.7c2.5 0 2.8 0 3.8.1 2.6.1 3.8 1.3 3.9 3.9.1 1 .1 1.3.1 3.8s0 2.8-.1 3.8c-.1 2.6-1.3 3.8-3.9 3.9-1 .1-1.3.1-3.8.1s-2.8 0-3.8-.1c-2.6-.1-3.8-1.3-3.9-3.9-.1-1-.1-1.3-.1-3.8s0-2.8.1-3.8C4.4 5.6 5.6 4.4 8.2 4.3c1-.1 1.3-.1 3.8-.1Z"/></symbol>
+  <symbol id="i-sacola" viewBox="0 0 24 24"><path d="M7 7V6a5 5 0 0 1 10 0v1h3.2l1 15H2.8l1-15H7Zm2 0h6V6a3 3 0 0 0-6 0v1Zm-3.3 2-.7 11h14l-.7-11H17v2h-2V9H9v2H7V9H5.7Z"/></symbol>
+</svg>
+
+
+<!-- ============================ HEADER ============================ -->
+<header class="topo">
+  <div class="wrap">
+    <a class="topo-logo" href="#inicio"><img src="assets/logoNovoMilenio.jpg" width="150" height="150" alt="Pizzaria Novo Milênio — início"></a>
+    <nav aria-label="Principal"><a href="#cardapio">Cardápio</a><a href="#onde-estamos">Endereço</a></nav>
+    <button type="button" class="topo-carrinho" data-abrir-carrinho aria-label="Abrir carrinho, vazio"><svg class="ico" aria-hidden="true"><use href="#i-sacola"/></svg><span class="tc-txt" aria-hidden="true">Carrinho</span><span class="tc-n" data-carrinho-qtd aria-hidden="true">0</span></button>
+    <a data-cta-pedido class="btn btn-zap" href="#cardapio">Montar meu pedido <span aria-hidden="true">→</span></a>
+  </div>
+</header>
+
+<main id="inicio">
+
+<!-- ============================ HERO ============================ -->
+<section class="hero" aria-labelledby="h-marca">
+  <div class="hero-fundo" aria-hidden="true"></div>
+  <div class="wrap hero-grid">
+    <div class="hero-txt">
+      <span class="faixa verde">Delivery e retirada</span>
+      <h1 class="marca" id="h-marca"><span class="marca-1">PIZZARIA</span><span class="marca-2">NOVO MILÊNIO</span></h1>
+      <p class="hero-local"><svg class="ico"><use href="#i-pin"/></svg>R. Paim, 211 – Loja 19 · Bela Vista, São Paulo</p>
+      <div class="hero-pedido" data-cta-hero>
+        <div class="hero-botoes">
+          <a class="btn btn-zap hero-montar" href="#cardapio">Montar meu pedido <span aria-hidden="true">→</span></a>
+          <a class="btn btn-linha hero-cardapio" href="#cardapio">Ver cardápio <span aria-hidden="true">→</span></a>
+        </div>
+        <p class="hero-fones">(11) 96224-8186 · ou ligue <a href="tel:+551131595191">3159-5191</a> / <a href="tel:+551131515502">3151-5502</a></p>
+      </div>
+    </div>
+    <!-- Pizza animada (decorativa). O vídeo só é carregado depois da página (js/hero.js);
+         sem JavaScript, com "reduzir movimento" ou economia de dados, fica a imagem parada. -->
+    <div class="hero-visual" aria-hidden="true">
+      <picture>
+        <source media="(min-width: 768px)" srcset="assets/hero-pizza-1280.webp">
+        <img class="hero-poster" src="assets/hero-pizza-768.webp" width="1280" height="720" alt="" decoding="async" fetchpriority="high">
+      </picture>
+      <video class="hero-video" muted loop playsinline preload="none" disablepictureinpicture tabindex="-1"
+        data-src-grande="assets/hero-pizza-1280" data-src-pequeno="assets/hero-pizza-768"></video>
+    </div>
+  </div>
+  <!-- Curva verde inferior (linha vermelha + linha branca + verde), como no banner -->
+  <svg class="hero-curva" viewBox="0 0 1440 160" preserveAspectRatio="none" aria-hidden="true" focusable="false">
+    <path class="hc-vermelho" d="M0 118C420 146 880 122 1440 6" />
+    <path class="hc-branco" d="M0 128C420 156 880 132 1440 16" />
+    <path class="hc-verde" d="M0 134C420 162 880 138 1440 22V160H0Z" />
+  </svg>
+</section>
+
+<!-- ============================ CARDÁPIO ============================ -->
+<section class="cardapio" id="cardapio" aria-labelledby="h-cardapio">
+  <div class="banda">
+    <div class="wrap"><h2 id="h-cardapio">Cardápio</h2><p>55 sabores · Grande e Broto</p></div>
+  </div>
+
+  <div class="wrap corpo">
+    <aside class="ferramentas" aria-label="Buscar e navegar no cardápio">
+      <label class="busca-rotulo" for="q">Buscar no cardápio</label>
+      <div class="busca">
+        <svg class="ico"><use href="#i-busca"/></svg>
+        <input id="q" type="search" inputmode="search" enterkeyhint="search" autocomplete="off" placeholder="Nº, sabor ou ingrediente" aria-describedby="dica">
+        <button type="button" class="limpar" aria-label="Limpar busca">×</button>
+      </div>
+      <p class="busca-dica" id="dica">Ex.: 33, frango, catupiry</p>
+      <ul class="cats" aria-label="Categorias">
+        <li><button type="button" class="cat" data-cat="salgadas" aria-pressed="true">Salgadas <small>01–48</small></button></li>
+        <li><button type="button" class="cat" data-cat="doces" aria-pressed="false">Doces <small>49–55</small></button></li>
+        <li><button type="button" class="cat" data-cat="bordas" aria-pressed="false">Bordas <small>3 opções</small></button></li>
+        <li><button type="button" class="cat" data-cat="bebidas" aria-pressed="false">Bebidas</button></li>
+      </ul>
+      <div class="zap-lateral">
+        <p><strong>Escolheu?</strong> Toque em “Escolher” na pizza, revise o carrinho e envie o pedido pelo WhatsApp.</p>
+        <a data-cta-pedido class="btn btn-zap" href="#cardapio">Montar meu pedido <span aria-hidden="true">→</span></a>
+      </div>
+    </aside>
+
+    <div class="lista-area">
+      <p class="status" role="status" aria-live="polite"></p>
+      <div id="lista"><noscript><p class="vazio">Para ver o cardápio, ative o JavaScript do navegador ou peça pelo WhatsApp (11) 96224-8186.</p></noscript></div>
+      <div class="fim-lista">
+        <p>Escolheu?<span>Toque em “Escolher”, revise o carrinho e envie pelo WhatsApp.</span></p>
+        <a data-cta-pedido href="#cardapio">Montar meu pedido <span aria-hidden="true">→</span></a>
+      </div>
+      <p class="voltar"><a href="#cardapio" data-voltar-cardapio>↑ Voltar às categorias e à busca</a></p>
+    </div>
+  </div>
+</section>
+
+<!-- ============================ ONDE ESTAMOS ============================ -->
+<section class="local" id="onde-estamos" aria-labelledby="h-local">
+  <div class="wrap">
+    <div>
+      <h2 class="faixa verde" id="h-local">Onde estamos</h2>
+      <div class="endereco">
+        <address><strong>R. Paim, 211 – Loja 19</strong>Bela Vista, São Paulo – SP<br>01306-010</address>
+        <a class="btn btn-linha" href="https://www.google.com/maps/dir/?api=1&destination=R.+Paim,+211+-+Bela+Vista,+S%C3%A3o+Paulo+-+SP,+01306-010" target="_blank" rel="noopener"><svg class="ico"><use href="#i-pin"/></svg>Rota</a>
+      </div>
+      <ul class="contatos">
+        <li><a href="https://wa.me/5511962248186" target="_blank" rel="noopener"><span>WhatsApp</span><strong>(11) 96224-8186 <svg class="ico"><use href="#i-wa"/></svg></strong></a></li>
+        <li><a href="tel:+551131595191"><span>Telefone</span><strong>3159-5191 <svg class="ico"><use href="#i-tel"/></svg></strong></a></li>
+        <li><a href="tel:+551131515502"><span>Telefone</span><strong>3151-5502 <svg class="ico"><use href="#i-tel"/></svg></strong></a></li>
+        <li class="contato-horario"><span>Horário</span><strong data-horario>Todos os dias, das 18:00 à 01:00</strong></li>
+        <li><a href="https://www.instagram.com/pizzaria_novomilenio/" target="_blank" rel="noopener"><span>Instagram</span><strong>@pizzaria_novomilenio <svg class="ico"><use href="#i-insta"/></svg></strong></a></li>
+      </ul>
+    </div>
+    <div class="mapa"><iframe title="Mapa: R. Paim, 211 – Bela Vista, São Paulo" loading="lazy" src="https://maps.google.com/maps?q=R.%20Paim%2C%20211%20-%20Bela%20Vista%2C%20S%C3%A3o%20Paulo%20-%20SP%2C%2001306-010&z=17&output=embed"></iframe></div>
+  </div>
+</section>
+
+<!-- ============================ CTA FINAL ============================ -->
+<section class="cta-final" data-cta-final aria-labelledby="h-final">
+  <div class="wrap">
+    <div><h2 id="h-final">Já escolheu sua pizza?</h2><p>Peça pelo WhatsApp <strong>(11) 96224-8186</strong></p></div>
+    <a data-cta-pedido class="btn btn-branco" href="#cardapio">Montar meu pedido <span aria-hidden="true">→</span></a>
+  </div>
+</section>
+</main>
+
+<footer class="rodape">
+  <div class="wrap">
+    <img class="rodape-logo" src="assets/logoNovoMilenio.jpg" width="150" height="150" alt="Pizzaria Novo Milênio" loading="lazy">
+    <div><h3>Endereço</h3><address>R. Paim, 211 – Loja 19<br>Bela Vista, São Paulo – SP<br>01306-010</address></div>
+    <div><h3>Pedidos</h3><p>WhatsApp <a href="https://wa.me/5511962248186" target="_blank" rel="noopener">(11) 96224-8186</a><br>Tel. <a href="tel:+551131595191">3159-5191</a><br>Tel. <a href="tel:+551131515502">3151-5502</a></p></div>
+    <div><h3>Horário</h3><p data-horario>Todos os dias, das 18:00 à 01:00</p><h3 class="rodape-h3-2">Instagram</h3><p><a href="https://www.instagram.com/pizzaria_novomilenio/" target="_blank" rel="noopener">@pizzaria_novomilenio</a></p></div>
+    <p class="rodape-base">Pizzaria Novo Milênio · Delivery e retirada</p>
+  </div>
+</footer>
+
+<!-- ============================ MONTAGEM DA PIZZA (Etapa 4) ============================ -->
+<dialog id="montagem" class="montagem" aria-labelledby="mt-titulo">
+  <header class="mt-topo">
+    <button type="button" class="mt-voltar" data-mt-fechar aria-label="Voltar ao cardápio"><span aria-hidden="true">←</span></button>
+    <h2 id="mt-titulo">Monte sua pizza</h2>
+    <button type="button" class="mt-x" data-mt-fechar aria-label="Fechar montagem"><span aria-hidden="true">×</span></button>
+  </header>
+
+  <div class="mt-corpo">
+    <fieldset class="mt-bloco">
+      <legend class="mt-h"><span class="mt-passo">1</span>Tamanho</legend>
+      <div class="mt-tamanhos">
+        <label class="mt-tam mt-tam-grande">
+          <input type="radio" name="mt-tamanho" value="grande">
+          <span class="mt-tam-nome">Grande</span>
+          <span class="mt-tam-regra">Escolha até 3 sabores</span>
+          <span class="mt-tam-obs">Pode misturar salgado e doce</span>
+          <span class="mt-tam-preco"></span>
+          <span class="mt-tam-check" aria-hidden="true">✓ Selecionado</span>
+        </label>
+        <label class="mt-tam mt-tam-broto">
+          <input type="radio" name="mt-tamanho" value="broto">
+          <span class="mt-tam-nome">Broto</span>
+          <span class="mt-tam-regra">Escolha até 2 sabores</span>
+          <span class="mt-tam-obs">Do mesmo tipo: só salgados ou só doces</span>
+          <span class="mt-tam-preco"></span>
+          <span class="mt-tam-check" aria-hidden="true">✓ Selecionado</span>
+        </label>
+      </div>
+    </fieldset>
+
+    <section class="mt-bloco" aria-labelledby="mt-h-sabores">
+      <h3 class="mt-h" id="mt-h-sabores"><span class="mt-passo">2</span>Sabores</h3>
+      <p class="mt-contador" aria-live="polite"></p>
+      <p class="mt-regra" hidden></p>
+      <ol class="mt-escolhidos"></ol>
+      <p class="mt-aviso" role="status" hidden></p>
+      <div class="mt-procura">
+        <label class="mt-rotulo" for="mt-busca">Adicionar outro sabor</label>
+        <div class="mt-campo">
+          <svg class="ico" aria-hidden="true"><use href="#i-busca"/></svg>
+          <input id="mt-busca" type="search" inputmode="search" enterkeyhint="search" autocomplete="off" placeholder="Nº, sabor ou ingrediente" aria-describedby="mt-dica">
+          <button type="button" class="mt-limpar" aria-label="Limpar busca de sabor" hidden>×</button>
+        </div>
+        <p class="mt-dica" id="mt-dica" aria-live="polite"></p>
+        <ul class="mt-resultados"></ul>
+      </div>
+    </section>
+
+    <fieldset class="mt-bloco">
+      <legend class="mt-h"><span class="mt-passo">3</span>Borda</legend>
+      <p class="mt-ajuda mt-ajuda-borda" id="mt-borda-ajuda">Opcional. O valor da borda é somado ao preço da pizza.</p>
+      <div class="mt-bordas" role="radiogroup" aria-describedby="mt-borda-ajuda"></div>
+    </fieldset>
+
+    <section class="mt-bloco">
+      <h3 class="mt-h"><span class="mt-passo">4</span><label for="mt-obs">Observações</label></h3>
+      <textarea id="mt-obs" rows="3" maxlength="300" placeholder="Ex.: sem cebola, pouco queijo, retirar ingrediente..." aria-describedby="mt-obs-ajuda"></textarea>
+      <p class="mt-ajuda" id="mt-obs-ajuda">Opcional. Texto livre enviado junto com o pedido.</p>
+    </section>
+
+    <section class="mt-bloco mt-resumo" aria-labelledby="mt-h-resumo">
+      <h3 class="mt-h" id="mt-h-resumo"><span class="mt-passo">5</span>Sua pizza</h3>
+      <div class="mt-resumo-conteudo"></div>
+    </section>
+  </div>
+
+  <footer class="mt-rodape">
+    <div class="mt-preco"><small></small><strong></strong></div>
+    <div class="mt-acao">
+      <button type="button" class="btn btn-zap mt-adicionar" disabled>Adicionar pizza</button>
+      <p class="mt-status" aria-live="polite"></p>
+    </div>
+  </footer>
+</dialog>
+
+<!-- ============================ CARRINHO (Etapa 5) ============================ -->
+<dialog id="carrinho" class="montagem carrinho" aria-labelledby="cr-titulo">
+  <header class="mt-topo">
+    <button type="button" class="mt-voltar" data-cr-fechar aria-label="Voltar ao cardápio"><span aria-hidden="true">←</span></button>
+    <h2 id="cr-titulo" tabindex="-1">Seu carrinho</h2>
+    <button type="button" class="mt-x" data-cr-fechar aria-label="Fechar carrinho"><span aria-hidden="true">×</span></button>
+  </header>
+
+  <div class="mt-corpo" data-view-pane="carrinho">
+    <p class="cr-status" role="status" aria-live="polite"></p>
+
+    <div class="cr-vazio" hidden>
+      <p class="cr-vazio-txt">Seu carrinho está vazio.</p>
+      <p class="cr-vazio-sub">Escolha pizzas ou bebidas no cardápio.</p>
+      <button type="button" class="btn btn-zap" data-cr-cardapio>Ver cardápio</button>
+    </div>
+
+    <ul class="cr-lista" aria-label="Pizzas no carrinho"></ul>
+
+    <section class="cr-resumo mt-resumo" aria-labelledby="cr-h-resumo">
+      <h3 class="mt-h" id="cr-h-resumo">Resumo</h3>
+      <div class="cr-resumo-conteudo mt-resumo-conteudo"></div>
+    </section>
+  </div>
+
+  <footer class="mt-rodape cr-rodape" data-view-pane="carrinho">
+    <div class="mt-preco cr-total"><small></small><strong></strong></div>
+    <div class="cr-botoes">
+      <button type="button" class="btn btn-linha cr-continuar" data-cr-fechar>Continuar comprando</button>
+      <button type="button" class="btn btn-zap cr-avancar">Avançar</button>
+    </div>
+  </footer>
+
+  <!-- ===================== DADOS DO PEDIDO (Etapa 6) ===================== -->
+  <div class="mt-corpo pd-corpo" data-view-pane="dados">
+    <p class="pd-pronto" tabindex="-1" role="status" hidden><strong>O WhatsApp foi aberto com seu pedido preenchido.</strong> Revise as informações e toque em enviar. <a class="pd-link-zap" href="https://wa.me/5511962248186" target="_blank" rel="noopener">Se o WhatsApp não abriu, toque aqui.</a></p>
+    <div class="pd-layout">
+      <details class="pd-resumo">
+        <summary><span class="pd-resumo-tit">Seu pedido</span><span class="pd-resumo-linha"></span></summary>
+        <div class="pd-resumo-conteudo"></div>
+      </details>
+
+      <form id="pd-form" class="pd-form" novalidate>
+        <div class="pd-erros" role="alert" tabindex="-1" hidden></div>
+
+        <fieldset class="mt-bloco pd-recebimento" aria-describedby="pd-erro-recebimento">
+          <legend class="mt-h"><span class="mt-passo">1</span>Como você vai receber o pedido?</legend>
+          <div class="mt-tamanhos pd-opcoes">
+            <label class="mt-tam pd-op">
+              <input type="radio" name="recebimento" value="delivery" id="pd-rec-delivery" required>
+              <span class="mt-tam-nome">Delivery</span>
+              <span class="mt-tam-obs">Entrega no endereço que você informar</span>
+              <span class="mt-tam-check" aria-hidden="true">✓ Selecionado</span>
+            </label>
+            <label class="mt-tam pd-op">
+              <input type="radio" name="recebimento" value="retirada" id="pd-rec-retirada">
+              <span class="mt-tam-nome">Retirada</span>
+              <span class="mt-tam-obs">Você retira na pizzaria</span>
+              <span class="mt-tam-check" aria-hidden="true">✓ Selecionado</span>
+            </label>
+          </div>
+          <p class="pd-erro" id="pd-erro-recebimento" hidden></p>
+        </fieldset>
+
+        <section class="mt-bloco" aria-labelledby="pd-h-dados">
+          <h3 class="mt-h" id="pd-h-dados"><span class="mt-passo">2</span>Seus dados</h3>
+          <div class="pd-campo">
+            <label for="pd-nome">Nome <span class="pd-obrig">obrigatório</span></label>
+            <input id="pd-nome" name="nome" type="text" autocomplete="name" maxlength="80" placeholder="Seu nome" required aria-describedby="pd-erro-nome">
+            <p class="pd-erro" id="pd-erro-nome" hidden></p>
+          </div>
+          <div class="pd-campo">
+            <label for="pd-whatsapp">WhatsApp <span class="pd-obrig">obrigatório</span></label>
+            <input id="pd-whatsapp" name="whatsapp" type="tel" inputmode="tel" autocomplete="tel-national" maxlength="20" placeholder="(11) 99999-9999" required aria-describedby="pd-ajuda-whatsapp pd-erro-whatsapp">
+            <p class="pd-ajuda" id="pd-ajuda-whatsapp">Celular com DDD, para a pizzaria falar com você sobre o pedido.</p>
+            <p class="pd-erro" id="pd-erro-whatsapp" hidden></p>
+          </div>
+        </section>
+
+        <section class="mt-bloco pd-entrega" aria-labelledby="pd-h-entrega" hidden>
+          <h3 class="mt-h" id="pd-h-entrega"><span class="mt-passo">3</span>Endereço de entrega</h3>
+          <div class="pd-campo">
+            <label for="pd-endereco">Endereço <span class="pd-obrig">obrigatório</span></label>
+            <input id="pd-endereco" name="endereco" type="text" autocomplete="address-line1" maxlength="120" placeholder="Rua, avenida, etc." aria-describedby="pd-erro-endereco">
+            <p class="pd-erro" id="pd-erro-endereco" hidden></p>
+          </div>
+          <div class="pd-linha">
+            <div class="pd-campo pd-campo-numero">
+              <label for="pd-numero">Número <span class="pd-obrig">obrigatório</span></label>
+              <input id="pd-numero" name="numero" type="text" autocomplete="off" maxlength="10" placeholder="211" aria-describedby="pd-erro-numero">
+              <p class="pd-erro" id="pd-erro-numero" hidden></p>
+            </div>
+            <div class="pd-campo">
+              <label for="pd-complemento">Complemento <span class="pd-opc">opcional</span></label>
+              <input id="pd-complemento" name="complemento" type="text" autocomplete="address-line2" maxlength="80" placeholder="Apartamento, bloco, sala...">
+            </div>
+          </div>
+          <div class="pd-campo">
+            <label for="pd-referencia">Referência <span class="pd-opc">opcional</span></label>
+            <input id="pd-referencia" name="referencia" type="text" autocomplete="off" maxlength="120" placeholder="Ex.: próximo ao...">
+          </div>
+          <div class="pd-campo">
+            <label for="pd-observacoesEntrega">Observações da entrega <span class="pd-opc">opcional</span></label>
+            <textarea id="pd-observacoesEntrega" name="observacoesEntrega" rows="3" maxlength="200" placeholder="Alguma informação para a entrega?" aria-describedby="pd-contador"></textarea>
+            <p class="pd-ajuda pd-contador" id="pd-contador" aria-live="off"></p>
+          </div>
+        </section>
+
+        <section class="mt-bloco pd-retirada" aria-labelledby="pd-h-retirada" hidden>
+          <h3 class="mt-h" id="pd-h-retirada"><span class="mt-passo">3</span>Local de retirada</h3>
+          <address class="pd-local-retirada"></address>
+          <p class="pd-ajuda">Horário: <span class="pd-horario"></span></p>
+        </section>
+
+        <p class="pd-escolha">Escolha Delivery ou Retirada para ver os próximos campos.</p>
+
+        <fieldset class="mt-bloco pd-pagamento" aria-describedby="pd-ajuda-pag pd-erro-formaPagamento">
+          <legend class="mt-h"><span class="mt-passo">4</span>Forma de pagamento</legend>
+          <p class="pd-ajuda" id="pd-ajuda-pag">Só para a pizzaria saber como você pretende pagar. Nada é cobrado pelo site.</p>
+          <div class="pd-pag-opcoes">
+            <label class="pd-pag-op"><input type="radio" name="formaPagamento" value="pix" id="pd-pag-pix" required><span>Pix</span></label>
+            <label class="pd-pag-op"><input type="radio" name="formaPagamento" value="dinheiro" id="pd-pag-dinheiro"><span>Dinheiro</span></label>
+            <label class="pd-pag-op"><input type="radio" name="formaPagamento" value="debito" id="pd-pag-debito"><span>Cartão de débito</span></label>
+            <label class="pd-pag-op"><input type="radio" name="formaPagamento" value="credito" id="pd-pag-credito"><span>Cartão de crédito</span></label>
+            <label class="pd-pag-op"><input type="radio" name="formaPagamento" value="outro" id="pd-pag-outro"><span>Outro</span></label>
+          </div>
+          <p class="pd-erro" id="pd-erro-formaPagamento" hidden></p>
+        </fieldset>
+      </form>
+    </div>
+  </div>
+
+  <footer class="mt-rodape cr-rodape pd-rodape" data-view-pane="dados">
+    <div class="mt-preco cr-total pd-total"></div>
+    <div class="cr-botoes">
+      <button type="button" class="btn btn-linha" data-pd-voltar>Voltar ao carrinho</button>
+      <button type="submit" form="pd-form" class="btn btn-zap pd-continuar"><svg class="ico" aria-hidden="true"><use href="#i-wa"/></svg>Enviar pedido pelo WhatsApp</button>
+    </div>
+  </footer>
+</dialog>
+
+<p class="nm-toast" role="status" aria-live="polite"></p>
+
+<!-- Barra de pedido: aparece quando o botão do hero sai da tela; some no CTA final e durante a digitação -->
+<div class="barra" aria-hidden="true">
+  <div class="barra-zap">
+    <p class="barra-txt"><small>Pedidos pelo WhatsApp</small><strong>(11) 96224-8186</strong></p>
+    <a data-cta-pedido class="btn btn-zap" href="#cardapio" tabindex="-1">Montar pedido <span aria-hidden="true">→</span></a>
+  </div>
+  <div class="barra-carrinho">
+    <p class="barra-txt"><small>Seu carrinho</small><strong data-barra-carrinho-txt>0 pizzas</strong></p>
+    <button type="button" class="btn btn-zap" data-abrir-carrinho tabindex="-1"><svg class="ico"><use href="#i-sacola"/></svg>Ver carrinho</button>
+  </div>
+</div>
+
+<script src="js/config.js"></script>
+<script src="js/cardapio-dados.js"></script>
+<script src="js/cardapio.js"></script>
+<script src="js/montagem-regras.js"></script>
+<script src="js/selecao.js"></script>
+<script src="js/montagem.js"></script>
+<script src="js/pedido.js"></script>
+<script src="js/carrinho.js"></script>
+<script src="js/whatsapp.js"></script>
+<script src="js/hero.js" defer></script>
+</body>
+</html>

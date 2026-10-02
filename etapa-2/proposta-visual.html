@@ -1,0 +1,581 @@
+<!doctype html>
+<html lang="pt-BR" data-notas="1">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Pizzaria Novo Milênio — Proposta de UI refinada (Etapa 2C)</title>
+<meta name="robots" content="noindex">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@75..125,400..900&display=swap" rel="stylesheet">
+<style>
+/* =====================================================================
+   IDENTIDADE — cores de referência extraídas do cardápio, placa e logo
+   ===================================================================== */
+:root{
+  --vermelho:#D70A26;
+  --vermelho-esc:#A10A25;
+  --verde:#178846;
+  --verde-esc:#0D6A36;
+  --branco:#FFFFFF;
+  --papel:#F7F6F3;
+  --cinza-faixa:#F0EFEB;   /* barras cinza das linhas do cardápio impresso */
+  --divisor:#E4E1DA;
+  --texto:#1A1814;
+  --texto-2:#5A544D;
+  --marca-busca:#FDE3E7;
+
+  --f:"Archivo",Arial,Helvetica,sans-serif;
+  --larga:118%;            /* títulos: versão larga, como "PIZZARIA" da placa */
+  --semi:108%;             /* rótulos e números */
+
+  --topo:56px;
+  --barra:68px;            /* altura reservada para a barra de pedido no celular */
+  --t:.15s;
+}
+@media (min-width:960px){:root{--topo:76px}}
+
+*,*::before,*::after{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--branco);color:var(--texto);font-family:var(--f);font-size:16px;line-height:1.5;-webkit-font-smoothing:antialiased;padding-bottom:var(--barra)}
+@media (min-width:960px){body{padding-bottom:0}}
+img{display:block;max-width:100%}
+a{color:inherit}
+button,input{font:inherit;color:inherit}
+h1,h2,h3,h4,p,figure,ul{margin:0}
+ul{padding:0;list-style:none}
+.wrap{max-width:1160px;margin:0 auto;padding:0 16px}
+@media (min-width:768px){.wrap{padding:0 32px}}
+.sr{position:absolute!important;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+.ico{width:1.2em;height:1.2em;flex:none;fill:currentColor}
+:focus-visible{outline:3px solid var(--texto);outline-offset:2px}
+@media (prefers-reduced-motion:no-preference){html{scroll-behavior:smooth}}
+
+/* Controle da proposta (não faz parte do site) */
+.proposta{background:#E7E7E4;border-bottom:1px dashed #95958F;font:12px/1.35 ui-monospace,Menlo,Consolas,monospace;color:#2b2b2b}
+.proposta .wrap{display:flex;flex-wrap:wrap;gap:6px 14px;align-items:center;padding-top:7px;padding-bottom:7px}
+.proposta button{font:inherit;border:1px solid #8a8a85;background:#fff;padding:4px 9px;border-radius:3px;cursor:pointer}
+.proposta button[aria-pressed="true"]{background:#2b2b2b;color:#fff;border-color:#2b2b2b}
+.nota{font:12px/1.5 ui-monospace,Menlo,Consolas,monospace;color:#3d3d3a;background:#F3F3F1;border:1px dashed #A3A39E;padding:8px 11px;border-radius:3px;margin:16px 0}
+.nota b{font-weight:700}
+html[data-notas="0"] .nota{display:none}
+
+/* =====================================================================
+   PEÇAS DERIVADAS DO CARDÁPIO IMPRESSO
+   ===================================================================== */
+.faixa{position:relative;isolation:isolate;display:inline-block;color:#fff;font-family:var(--f);font-stretch:var(--larga);font-weight:800;text-transform:uppercase;letter-spacing:.05em;line-height:1;padding:.5em 1.05em .46em;white-space:nowrap}
+.faixa::before,.faixa::after{content:"";position:absolute;inset:0;clip-path:polygon(.5em 0,100% 0,calc(100% - .5em) 100%,0 100%)}
+.faixa::after{background:var(--vermelho);z-index:-1}
+.faixa::before{background:var(--vermelho-esc);transform:translate(.16em,.16em);z-index:-2}
+.faixa.verde::after{background:var(--verde)}
+.faixa.verde::before{background:var(--verde-esc)}
+
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:.5em;min-height:48px;padding:0 20px;border:2px solid transparent;border-radius:4px;font-family:var(--f);font-stretch:var(--semi);font-weight:700;font-size:16px;letter-spacing:.01em;text-decoration:none;white-space:nowrap;cursor:pointer;transition:background-color var(--t),color var(--t),border-color var(--t),transform .08s}
+.btn:active{transform:translateY(1px)}
+.btn-zap{background:var(--vermelho);color:#fff}
+.btn-zap:hover{background:var(--vermelho-esc)}
+.btn-linha{border-color:var(--verde-esc);color:var(--verde-esc);background:transparent}
+.btn-linha:hover{background:var(--verde-esc);color:#fff}
+.btn-branco{background:#fff;color:var(--vermelho-esc)}
+.btn-branco:hover{background:var(--cinza-faixa)}
+
+/* =====================================================================
+   HEADER
+   ===================================================================== */
+.topo{background:#fff;position:relative;z-index:40}
+.topo .wrap{display:flex;align-items:center;gap:16px;height:var(--topo)}
+.topo-logo img{height:44px;width:auto}
+.topo nav{display:flex;gap:4px;margin-left:auto}
+.topo nav a{display:flex;align-items:center;min-height:44px;padding:0 10px;text-decoration:none;font-stretch:var(--semi);font-weight:600;font-size:13px;letter-spacing:.08em;text-transform:uppercase;border-bottom:3px solid transparent;transition:border-color var(--t),color var(--t)}
+.topo nav a:hover{border-bottom-color:var(--vermelho);color:var(--vermelho-esc)}
+.topo .btn{display:none}
+@media (min-width:960px){
+  .topo{position:sticky;top:0;border-bottom:1px solid var(--divisor)}
+  .topo-logo img{height:60px}
+  .topo nav{gap:14px;margin-right:8px}
+  .topo nav a{font-size:14px}
+  .topo .btn{display:inline-flex;min-height:46px;font-size:15px}
+}
+
+/* =====================================================================
+   HERO — nome, CTA único, fachada real que “pousa” sobre a banda verde
+   ===================================================================== */
+.hero{position:relative;z-index:2;padding:22px 0 0;border-top:3px solid var(--verde)}
+.hero-grid{display:grid;gap:0}
+.hero .faixa{font-size:12px}
+.marca{margin-top:16px;line-height:.9}
+.marca-1{display:block;color:var(--vermelho);font-stretch:var(--larga);font-weight:900;font-size:min(12.5vw,100px);letter-spacing:.035em;white-space:nowrap}
+.marca-2{display:block;margin-top:.55em;font-stretch:var(--larga);font-weight:400;font-size:min(4.7vw,28px);letter-spacing:.36em;white-space:nowrap}
+.hero-local{display:flex;align-items:center;gap:6px;margin-top:16px;font-size:15px;color:var(--texto-2)}
+.hero-local .ico{color:var(--vermelho);width:18px;height:18px}
+.hero-pedido{margin-top:20px;display:grid;gap:10px}
+.hero-pedido .btn{min-height:54px;font-size:17px;width:100%}
+.hero-fones{font-size:14px;color:var(--texto-2);text-align:center}
+.hero-fones a{font-weight:600;color:var(--texto);text-decoration:none;border-bottom:1px solid var(--divisor);font-variant-numeric:tabular-nums}
+.hero-fones a:hover{border-bottom-color:var(--texto)}
+.hero-foto{margin-top:26px}
+.fachada{background:var(--verde-esc);padding:6px}
+.fachada img{width:100%;height:auto;aspect-ratio:680/383;object-fit:cover}
+@media (min-width:768px){
+  .hero-pedido{grid-template-columns:auto 1fr;align-items:center;gap:18px}
+  .hero-pedido .btn{width:auto;padding:0 30px}
+  .hero-fones{text-align:left}
+}
+@media (min-width:960px){
+  .hero{padding:44px 0 0;border-top:0}
+  .hero-grid{grid-template-columns:1fr 1.05fr;gap:56px;align-items:end}
+  .hero .faixa{font-size:13px}
+  .marca-1{font-size:min(8.4vw,104px)}
+  .marca-2{font-size:min(2.5vw,30px)}
+  .hero-pedido{margin-top:26px;grid-template-columns:auto;justify-items:start}
+  .hero-txt{padding-bottom:110px}
+  .hero-foto{margin-top:0}
+  .fachada{padding:8px}
+}
+
+/* =====================================================================
+   CARDÁPIO — a banda verde da placa vira o cabeçalho do cardápio
+   ===================================================================== */
+.cardapio{position:relative;z-index:1}
+.banda{position:relative;background:var(--verde);color:#fff;margin-top:-92px;padding-top:110px;clip-path:polygon(0 30px,100% 0,100% 100%,0 100%)}
+.banda::before{content:"";position:absolute;left:0;right:0;top:0;height:44px;background:#fff;clip-path:polygon(0 36px,100% 6px,100% 9px,0 39px)}
+.banda .wrap{display:flex;align-items:baseline;justify-content:space-between;gap:12px;padding-bottom:14px}
+.banda h2{font-stretch:var(--larga);font-weight:800;font-size:26px;text-transform:uppercase;letter-spacing:.03em;line-height:1}
+.banda p{font-size:13px;opacity:.95;text-align:right;white-space:nowrap}
+@media (min-width:960px){
+  .banda{margin-top:-120px;padding-top:150px;clip-path:polygon(0 52px,100% 0,100% 100%,0 100%)}
+  .banda::before{height:66px;clip-path:polygon(0 58px,100% 6px,100% 10px,0 62px)}
+  .banda .wrap{padding-bottom:26px}
+  .banda h2{font-size:34px}
+  .banda p{font-size:15px}
+}
+
+/* --- Ferramentas: busca + categorias (fixas no celular, laterais no desktop) --- */
+.corpo{display:block}
+.ferramentas{position:sticky;top:0;z-index:30;background:var(--verde);color:#fff;padding:0 16px 10px;margin:0 -16px}
+@media (min-width:768px){.ferramentas{padding:0 32px 12px;margin:0 -32px}}
+
+/* Busca: faixa branca inclinada, como as barras do cardápio — sem cara de formulário */
+.busca{position:relative;display:flex;align-items:center;background:#fff;color:var(--texto);clip-path:polygon(8px 0,100% 0,calc(100% - 8px) 100%,0 100%)}
+.busca .ico{position:absolute;left:16px;width:20px;height:20px;color:var(--texto);pointer-events:none}
+.busca input{flex:1;min-width:0;height:48px;padding:0 46px;border:0;background:transparent;font-size:16px;font-weight:500;-webkit-appearance:none;appearance:none}
+.busca input::placeholder{color:#6E675F;font-weight:400}
+.busca input::-webkit-search-cancel-button{display:none}
+.busca input:focus{outline:none}
+.busca::after{content:"";position:absolute;left:8px;right:8px;bottom:0;height:3px;background:transparent;transition:background-color var(--t)}
+.busca:focus-within::after{background:var(--vermelho)}
+.limpar{position:absolute;right:8px;width:40px;height:40px;border:0;background:transparent;font-size:24px;line-height:1;color:var(--texto-2);cursor:pointer;display:none;border-radius:3px}
+.limpar:hover{background:var(--cinza-faixa)}
+.busca.com-texto .limpar{display:block}
+.busca-rotulo{display:none}
+.busca-dica{display:none}
+
+/* Categorias: paralelogramos. Ativa = faixa vermelha com sombra, como no impresso */
+.cats{display:flex;gap:6px;margin-top:10px}
+.cats li{flex:1 1 auto;min-width:0}
+@media (max-width:374px){.cats{gap:4px}.cat{font-size:12px!important;letter-spacing:.02em!important;padding:0 6px!important}}
+.cat{position:relative;isolation:isolate;width:100%;min-height:44px;border:0;background:transparent;color:#fff;cursor:pointer;font-stretch:100%;font-weight:700;font-size:13px;letter-spacing:.05em;text-transform:uppercase;padding:0 10px;transition:color var(--t)}
+.cat::before,.cat::after{content:"";position:absolute;inset:0;clip-path:polygon(7px 0,100% 0,calc(100% - 7px) 100%,0 100%);transition:background-color var(--t),transform var(--t)}
+.cat::after{background:var(--verde-esc);z-index:-1}
+.cat::before{background:transparent;z-index:-2}
+.cat:hover::after{background:#0A5A2D}
+.cat small{display:none}
+.cat[aria-pressed="true"]::after{background:var(--vermelho)}
+.cat[aria-pressed="true"]::before{background:var(--vermelho-esc);transform:translate(3px,3px)}
+.cat:active::after{transform:translateY(1px)}
+.cat:focus-visible{outline:3px solid #fff;outline-offset:2px}
+.zap-lateral{display:none}
+
+/* --- Lista --- */
+.lista-area{padding:0 0 8px}
+.lista-cab{display:flex;align-items:baseline;justify-content:space-between;gap:12px;padding:22px 0 8px;border-bottom:3px solid var(--texto)}
+.lista-cab h3{font-stretch:var(--larga);font-weight:800;font-size:18px;text-transform:uppercase;letter-spacing:.03em}
+.lista-cab span{font-stretch:var(--semi);font-weight:600;font-size:13px;color:var(--texto-2);font-variant-numeric:tabular-nums;white-space:nowrap}
+.status{font-size:14px;color:var(--texto-2);padding-top:14px}
+.status:empty{display:none}
+.status strong{color:var(--texto)}
+mark{background:var(--marca-busca);color:inherit;border-radius:2px;padding:0 1px}
+
+/* Item de pizza: [nº] NOME / descrição / GRANDE · BROTO */
+.pizza{display:grid;grid-template-columns:40px 1fr;column-gap:12px;padding:16px 0 17px;border-bottom:1px solid var(--divisor)}
+.pizza-n{grid-row:1/span 2;align-self:start;display:flex;align-items:center;justify-content:center;height:28px;background:var(--cinza-faixa);clip-path:polygon(5px 0,100% 0,calc(100% - 5px) 100%,0 100%);font-stretch:var(--semi);font-weight:800;font-size:15px;font-variant-numeric:tabular-nums}
+.pizza-nome{font-stretch:var(--semi);font-weight:800;font-size:16.5px;letter-spacing:.025em;text-transform:uppercase;line-height:1.2;padding-top:3px}
+.pizza-desc{font-size:15px;color:var(--texto-2);line-height:1.4;margin-top:3px}
+.precos{grid-column:2;display:flex;margin-top:11px}
+.preco{display:grid;gap:2px;padding-right:22px}
+.preco + .preco{padding-left:18px;border-left:1px solid var(--divisor)}
+.preco small{display:flex;align-items:center;gap:6px;font-stretch:var(--semi);font-weight:700;font-size:11px;letter-spacing:.1em;text-transform:uppercase}
+.preco small::before{content:"";width:10px;height:8px;background:currentColor;clip-path:polygon(3px 0,100% 0,calc(100% - 3px) 100%,0 100%)}
+.preco strong{font-stretch:var(--semi);font-weight:800;font-size:20px;line-height:1.05;font-variant-numeric:tabular-nums;white-space:nowrap}
+.rs{font-size:.66em;font-weight:700;margin-right:.2em;letter-spacing:.02em}
+.preco.g{color:var(--vermelho)}
+.preco.b{color:var(--verde-esc)}
+
+/* Itens simples (bordas e bebidas) */
+.simples{display:grid;grid-template-columns:40px 1fr auto;column-gap:12px;align-items:center;min-height:52px;padding:10px 0;border-bottom:1px solid var(--divisor)}
+.simples .pizza-n{grid-row:auto;align-self:center}
+.simples-nome{font-stretch:var(--semi);font-weight:700;font-size:15px;letter-spacing:.02em;text-transform:uppercase;line-height:1.25}
+.simples-nome small{display:block;font-weight:500;font-size:12.5px;text-transform:none;letter-spacing:0;color:var(--texto-2);font-stretch:100%}
+.simples-val{font-stretch:var(--semi);font-weight:800;font-size:17px;font-variant-numeric:tabular-nums;white-space:nowrap}
+.subgrupo{display:flex;align-items:center;gap:10px;padding:22px 0 8px;font-stretch:var(--semi);font-weight:700;font-size:12.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--verde-esc)}
+.subgrupo::after{content:"";flex:1;height:1px;background:var(--verde)}
+
+.vazio{padding:26px 0 8px}
+.vazio p{font-size:16px}
+.vazio p + p{margin-top:6px;font-size:14.5px;color:var(--texto-2)}
+
+/* Fim da lista: lembrete de pedido em linha, sem competir com a barra fixa */
+.fim-lista{display:flex;align-items:center;justify-content:space-between;gap:14px;margin-top:22px;padding:16px 0 0;border-top:3px solid var(--texto)}
+.fim-lista p{font-stretch:var(--semi);font-weight:700;font-size:15.5px;line-height:1.3}
+.fim-lista p span{display:block;font-weight:400;font-size:14px;color:var(--texto-2);font-stretch:100%}
+.fim-lista a{flex:none;display:inline-flex;align-items:center;gap:6px;min-height:44px;font-stretch:var(--semi);font-weight:700;color:var(--vermelho-esc);text-decoration:none;border-bottom:2px solid currentColor}
+.fim-lista a:hover{color:var(--vermelho)}
+
+@media (min-width:768px){
+  .pizza{grid-template-columns:48px 1fr 240px;column-gap:16px;align-items:center;padding:16px 0}
+  .pizza-n{grid-row:1;align-self:center}
+  .pizza-txt{grid-column:2}
+  .precos{grid-column:3;grid-row:1;margin-top:0;justify-content:flex-end}
+  .preco{padding-right:0;min-width:100px;justify-items:end}
+  .preco + .preco{padding-left:16px;margin-left:16px}
+  .simples{grid-template-columns:48px 1fr auto;column-gap:16px}
+}
+
+/* --- Desktop: coluna lateral editorial --- */
+@media (min-width:960px){
+  .corpo{display:grid;grid-template-columns:260px 1fr;gap:56px;align-items:start;padding-top:44px}
+  .ferramentas{position:sticky;top:calc(var(--topo) + 28px);background:transparent;color:var(--texto);padding:0;margin:0}
+  .busca-rotulo{display:block;font-stretch:var(--semi);font-weight:700;font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--texto-2);margin-bottom:4px}
+  .busca{clip-path:none;background:transparent;border-bottom:2px solid var(--texto)}
+  .busca .ico{left:0}
+  .busca input{padding-left:30px;height:46px}
+  .busca::after{left:0;right:0;bottom:-2px}
+  .limpar{right:-6px}
+  .busca-dica{display:block;font-size:13px;color:var(--texto-2);margin-top:8px}
+  .cats{flex-direction:column;gap:0;margin-top:28px;border-top:1px solid var(--divisor)}
+  .cat{display:flex;justify-content:space-between;align-items:center;min-height:50px;padding:0 16px;color:var(--texto);font-size:13.5px;text-align:left;border-bottom:1px solid var(--divisor)}
+  .cat::after{background:transparent}
+  .cat:hover::after{background:var(--papel)}
+  .cat small{display:inline;font-weight:500;font-size:12.5px;letter-spacing:.02em;text-transform:none;color:var(--texto-2);font-variant-numeric:tabular-nums}
+  .cat[aria-pressed="true"]{color:#fff}
+  .cat[aria-pressed="true"] small{color:#fff}
+  .cat:focus-visible{outline-color:var(--texto)}
+  .zap-lateral{display:block;margin-top:30px;padding-top:16px;border-top:3px solid var(--vermelho)}
+  .zap-lateral p{font-size:14.5px;color:var(--texto-2);margin-bottom:12px}
+  .zap-lateral strong{color:var(--texto)}
+  .zap-lateral .btn{width:100%}
+  .lista-cab{padding-top:0}
+  .fim-lista{display:none}
+}
+
+/* =====================================================================
+   ONDE ESTAMOS
+   ===================================================================== */
+.local{background:var(--papel);margin-top:48px;padding:44px 0 50px;border-top:1px solid var(--divisor)}
+.local .wrap{display:grid;gap:22px}
+.local .faixa{font-size:18px}
+.endereco{display:grid;grid-template-columns:1fr auto;gap:14px;align-items:center;padding:16px 0;border-top:1px solid var(--divisor);border-bottom:1px solid var(--divisor);margin-top:20px}
+.endereco address{font-style:normal;font-size:16px;line-height:1.45}
+.endereco strong{display:block;font-stretch:var(--semi);font-size:20px;font-weight:800}
+.endereco .btn{min-height:46px;padding:0 16px;font-size:15px}
+.contatos li{border-bottom:1px solid var(--divisor)}
+.contatos a{display:flex;align-items:center;justify-content:space-between;gap:12px;min-height:54px;text-decoration:none;transition:color var(--t)}
+.contatos a span{font-size:14.5px;color:var(--texto-2)}
+.contatos a strong{display:flex;align-items:center;gap:8px;font-stretch:var(--semi);font-weight:700;font-size:17px;font-variant-numeric:tabular-nums}
+.contatos a:hover strong{color:var(--vermelho-esc)}
+.contatos .ico{color:var(--verde-esc)}
+.contatos li:first-child .ico{color:var(--vermelho)}
+.mapa{background:#E9E7E1;aspect-ratio:4/3;border:1px solid var(--divisor)}
+.mapa iframe{display:block;width:100%;height:100%;border:0}
+@media (min-width:768px){.local .wrap{grid-template-columns:1fr 1fr;gap:32px;align-items:start}}
+@media (min-width:960px){
+  .local{margin-top:72px;padding:64px 0 72px}
+  .local .wrap{grid-template-columns:1fr 1.1fr;gap:56px;align-items:start}
+  .local .faixa{font-size:22px}
+}
+
+/* =====================================================================
+   CTA FINAL + RODAPÉ
+   ===================================================================== */
+.cta-final{background:var(--vermelho);color:#fff;clip-path:polygon(0 0,100% 26px,100% 100%,0 100%);padding:56px 0 44px}
+.cta-final .wrap{display:grid;gap:20px}
+.cta-final h2{font-stretch:var(--larga);font-weight:800;font-size:clamp(26px,7vw,42px);line-height:1.05}
+.cta-final p{margin-top:8px;font-size:17px}
+.cta-final p strong{font-stretch:var(--semi);font-variant-numeric:tabular-nums;white-space:nowrap}
+.cta-final .btn{min-height:54px;font-size:17px}
+@media (min-width:768px){.cta-final .wrap{grid-template-columns:1fr auto;align-items:center}.cta-final .btn{padding:0 30px}}
+@media (min-width:960px){.cta-final{clip-path:polygon(0 0,100% 44px,100% 100%,0 100%);padding:84px 0 64px}}
+
+.rodape{background:var(--verde-esc);color:#fff;padding:36px 0 28px}
+.rodape .wrap{display:grid;gap:22px}
+.rodape-logo{width:92px;background:#fff;border-radius:3px;padding:6px}
+.rodape h3{font-stretch:var(--semi);font-size:12px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;opacity:.85;margin-bottom:6px}
+.rodape p,.rodape address{font-style:normal;line-height:1.7}
+.rodape a{text-decoration:none;border-bottom:1px solid rgba(255,255,255,.5);white-space:nowrap}
+.rodape a:hover{border-bottom-color:#fff}
+.rodape-base{border-top:1px solid rgba(255,255,255,.25);padding-top:16px;font-size:14px}
+@media (min-width:768px){.rodape .wrap{grid-template-columns:auto 1fr 1fr 1fr;gap:28px 40px}.rodape-base{grid-column:1/-1}}
+
+/* =====================================================================
+   BARRA DE PEDIDO (celular/tablet) — ferramenta, não anúncio
+   ===================================================================== */
+.barra{position:fixed;left:0;right:0;bottom:0;z-index:50;display:flex;align-items:center;gap:12px;min-height:60px;padding:8px 12px calc(8px + env(safe-area-inset-bottom)) 16px;background:#fff;border-top:1px solid var(--divisor);transform:translateY(100%);transition:transform .2s ease}
+.barra.on{transform:none}
+.barra-txt{flex:1;min-width:0;line-height:1.2}
+.barra-txt small{display:block;font-stretch:var(--semi);font-weight:600;font-size:11.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--texto-2)}
+.barra-txt strong{font-stretch:var(--semi);font-weight:700;font-size:16px;font-variant-numeric:tabular-nums}
+.barra .btn{min-height:44px;padding:0 18px;font-size:15px}
+@media (prefers-reduced-motion:reduce){.barra{transition:none}}
+@media (min-width:960px){.barra{display:none}}
+</style>
+</head>
+<body>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="i-wa" viewBox="0 0 24 24"><path d="M12 2.2a9.8 9.8 0 0 0-8.4 14.8L2.2 21.8l4.9-1.3A9.8 9.8 0 1 0 12 2.2Zm0 1.8a8 8 0 1 1-4.2 14.8l-.3-.2-2.9.8.8-2.8-.2-.3A8 8 0 0 1 12 4Z"/><path d="M9.1 7.3c-.2-.4-.4-.4-.6-.4h-.5c-.2 0-.5.1-.7.3-.3.3-.9.9-.9 2.2s.9 2.5 1 2.7c.1.2 1.8 2.9 4.5 4 2.2.9 2.7.7 3.2.7.5-.1 1.5-.6 1.7-1.2.2-.6.2-1.1.2-1.2-.1-.1-.2-.2-.5-.3l-1.7-.8c-.2-.1-.4-.1-.6.1l-.8 1c-.1.2-.3.2-.5.1-.3-.1-1.1-.4-2-1.2-.8-.7-1.3-1.5-1.4-1.8-.2-.3 0-.4.1-.5l.4-.4.2-.4v-.4l-.9-2Z"/></symbol>
+  <symbol id="i-tel" viewBox="0 0 24 24"><path d="M6.6 10.8a15.1 15.1 0 0 0 6.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.1.4 2.3.6 3.6.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1A17 17 0 0 1 3 4c0-.6.4-1 1-1h3.5c.6 0 1 .4 1 1 0 1.3.2 2.5.6 3.6.1.3 0 .7-.2 1l-2.3 2.2Z"/></symbol>
+  <symbol id="i-pin" viewBox="0 0 24 24"><path d="M12 2a7 7 0 0 0-7 7c0 5.3 7 13 7 13s7-7.7 7-13a7 7 0 0 0-7-7Zm0 9.5a2.5 2.5 0 1 1 0-5 2.5 2.5 0 0 1 0 5Z"/></symbol>
+  <symbol id="i-busca" viewBox="0 0 24 24"><path d="M10.5 3a7.5 7.5 0 0 1 5.96 12.05l4.25 4.24-1.42 1.42-4.24-4.25A7.5 7.5 0 1 1 10.5 3Zm0 2a5.5 5.5 0 1 0 0 11 5.5 5.5 0 0 0 0-11Z"/></symbol>
+  <symbol id="i-insta" viewBox="0 0 24 24"><path d="M12 7.3a4.7 4.7 0 1 0 0 9.4 4.7 4.7 0 0 0 0-9.4Zm0 7.7a3 3 0 1 1 0-6 3 3 0 0 1 0 6Zm4.9-8.9a1.1 1.1 0 1 0 0 2.2 1.1 1.1 0 0 0 0-2.2ZM12 2.5c-2.6 0-2.9 0-3.9.1-3.5.2-5.4 2.1-5.6 5.6-.1 1-.1 1.3-.1 3.9s0 2.9.1 3.9c.2 3.5 2.1 5.4 5.6 5.6 1 .1 1.3.1 3.9.1s2.9 0 3.9-.1c3.5-.2 5.4-2.1 5.6-5.6.1-1 .1-1.3.1-3.9s0-2.9-.1-3.9c-.2-3.5-2.1-5.4-5.6-5.6-1-.1-1.3-.1-3.9-.1Zm0 1.7c2.5 0 2.8 0 3.8.1 2.6.1 3.8 1.3 3.9 3.9.1 1 .1 1.3.1 3.8s0 2.8-.1 3.8c-.1 2.6-1.3 3.8-3.9 3.9-1 .1-1.3.1-3.8.1s-2.8 0-3.8-.1c-2.6-.1-3.8-1.3-3.9-3.9-.1-1-.1-1.3-.1-3.8s0-2.8.1-3.8C4.4 5.6 5.6 4.4 8.2 4.3c1-.1 1.3-.1 3.8-.1Z"/></symbol>
+</svg>
+
+<div class="proposta" role="region" aria-label="Controle da proposta (não faz parte do site)">
+  <div class="wrap"><strong>ETAPA 2C · UI REFINADA (Direção 2)</strong><button type="button" id="bt-notas" aria-pressed="true">Notas da proposta</button></div>
+</div>
+
+<!-- ============================ HEADER ============================ -->
+<header class="topo">
+  <div class="wrap">
+    <a class="topo-logo" href="#inicio"><img src="../assets/logoNovoMilenio.jpg" width="150" height="150" alt="Pizzaria Novo Milênio — início"></a>
+    <nav aria-label="Principal"><a href="#cardapio">Cardápio</a><a href="#onde-estamos">Endereço</a></nav>
+    <a class="btn btn-zap" href="https://wa.me/5511962248186" target="_blank" rel="noopener"><svg class="ico"><use href="#i-wa"/></svg>Pedir pelo WhatsApp</a>
+  </div>
+</header>
+
+<main id="inicio">
+
+<!-- ============================ HERO ============================ -->
+<section class="hero" aria-labelledby="h-marca">
+  <div class="wrap hero-grid">
+    <div class="hero-txt">
+      <span class="faixa verde">Delivery e retirada</span>
+      <h1 class="marca" id="h-marca"><span class="marca-1">PIZZARIA</span><span class="marca-2">NOVO MILÊNIO</span></h1>
+      <p class="hero-local"><svg class="ico"><use href="#i-pin"/></svg>R. Paim, 211 – Lj 19 · Bela Vista, São Paulo</p>
+      <div class="hero-pedido" data-cta-hero>
+        <a class="btn btn-zap" href="https://wa.me/5511962248186" target="_blank" rel="noopener"><svg class="ico"><use href="#i-wa"/></svg>Pedir pelo WhatsApp</a>
+        <p class="hero-fones">(11) 96224-8186 · ou ligue <a href="tel:+551131595191">3159-5191</a> / <a href="tel:+551131515502">3151-5502</a></p>
+      </div>
+    </div>
+    <figure class="hero-foto">
+      <div class="fachada"><img src="../assets/pizzariaLojaFisica.webp" width="680" height="383" alt="Fachada da Pizzaria Novo Milênio: a placa verde e vermelha sobre o balcão, com as bolsas de entrega à esquerda"></div>
+    </figure>
+  </div>
+</section>
+
+<!-- ============================ CARDÁPIO ============================ -->
+<section class="cardapio" id="cardapio" aria-labelledby="h-cardapio">
+  <div class="banda">
+    <div class="wrap"><h2 id="h-cardapio">Cardápio</h2><p>55 sabores · Grande e Broto</p></div>
+  </div>
+
+  <div class="wrap corpo">
+    <aside class="ferramentas" aria-label="Buscar e navegar no cardápio">
+      <label class="busca-rotulo" for="q">Buscar no cardápio</label>
+      <div class="busca">
+        <svg class="ico"><use href="#i-busca"/></svg>
+        <input id="q" type="search" inputmode="search" enterkeyhint="search" autocomplete="off" placeholder="Nº, sabor ou ingrediente" aria-describedby="dica">
+        <button type="button" class="limpar" aria-label="Limpar busca">×</button>
+      </div>
+      <p class="busca-dica" id="dica">Ex.: 33, frango, catupiry</p>
+      <ul class="cats" aria-label="Categorias">
+        <li><button type="button" class="cat" data-cat="salgadas" aria-pressed="true">Salgadas <small>01–48</small></button></li>
+        <li><button type="button" class="cat" data-cat="doces" aria-pressed="false">Doces <small>49–55</small></button></li>
+        <li><button type="button" class="cat" data-cat="bordas" aria-pressed="false">Bordas <small>3 opções</small></button></li>
+        <li><button type="button" class="cat" data-cat="bebidas" aria-pressed="false">Bebidas</button></li>
+      </ul>
+      <div class="zap-lateral">
+        <p><strong>Escolheu?</strong> Anote o número do sabor e peça pelo WhatsApp.</p>
+        <a class="btn btn-zap" href="https://wa.me/5511962248186" target="_blank" rel="noopener"><svg class="ico"><use href="#i-wa"/></svg>Pedir pelo WhatsApp</a>
+      </div>
+    </aside>
+
+    <div class="lista-area">
+      <p class="status" role="status" aria-live="polite"></p>
+      <div id="lista"></div>
+      <div class="fim-lista">
+        <p>Escolheu?<span>Anote o número do sabor e peça pelo WhatsApp.</span></p>
+        <a href="https://wa.me/5511962248186" target="_blank" rel="noopener"><svg class="ico"><use href="#i-wa"/></svg>Pedir</a>
+      </div>
+      <p class="nota"><b>Amostra:</b> só alguns itens reais, copiados do cardápio sem correção. Para testar, digite <b>33</b>, <b>frango</b>, <b>catupiry</b> ou <b>coca</b>. Um número busca entre os sabores de pizza; um texto busca em nome e ingredientes de todas as categorias.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============================ ONDE ESTAMOS ============================ -->
+<section class="local" id="onde-estamos" aria-labelledby="h-local">
+  <div class="wrap">
+    <div>
+      <h2 class="faixa verde" id="h-local">Onde estamos</h2>
+      <div class="endereco">
+        <address><strong>R. Paim, 211 – Lj 19</strong>Bela Vista, São Paulo – SP<br>01306-010</address>
+        <a class="btn btn-linha" href="https://www.google.com/maps/dir/?api=1&destination=R.+Paim,+211+-+Bela+Vista,+S%C3%A3o+Paulo+-+SP,+01306-010" target="_blank" rel="noopener"><svg class="ico"><use href="#i-pin"/></svg>Rota</a>
+      </div>
+      <ul class="contatos">
+        <li><a href="https://wa.me/5511962248186" target="_blank" rel="noopener"><span>WhatsApp</span><strong>(11) 96224-8186 <svg class="ico"><use href="#i-wa"/></svg></strong></a></li>
+        <li><a href="tel:+551131595191"><span>Telefone</span><strong>3159-5191 <svg class="ico"><use href="#i-tel"/></svg></strong></a></li>
+        <li><a href="tel:+551131515502"><span>Telefone</span><strong>3151-5502 <svg class="ico"><use href="#i-tel"/></svg></strong></a></li>
+        <li><a href="https://www.instagram.com/pizzaria_novomilenio/" target="_blank" rel="noopener"><span>Instagram</span><strong>@pizzaria_novomilenio <svg class="ico"><use href="#i-insta"/></svg></strong></a></li>
+      </ul>
+    </div>
+    <div class="mapa"><iframe title="Mapa: R. Paim, 211 – Bela Vista, São Paulo" loading="lazy" src="https://maps.google.com/maps?q=R.%20Paim%2C%20211%20-%20Bela%20Vista%2C%20S%C3%A3o%20Paulo%20-%20SP%2C%2001306-010&z=17&output=embed"></iframe></div>
+  </div>
+</section>
+
+<!-- ============================ CTA FINAL ============================ -->
+<section class="cta-final" data-cta-final aria-labelledby="h-final">
+  <div class="wrap">
+    <div><h2 id="h-final">Já escolheu sua pizza?</h2><p>Peça pelo WhatsApp <strong>(11) 96224-8186</strong></p></div>
+    <a class="btn btn-branco" href="https://wa.me/5511962248186" target="_blank" rel="noopener"><svg class="ico"><use href="#i-wa"/></svg>Pedir pelo WhatsApp</a>
+  </div>
+</section>
+</main>
+
+<footer class="rodape">
+  <div class="wrap">
+    <img class="rodape-logo" src="../assets/logoNovoMilenio.jpg" width="150" height="150" alt="Pizzaria Novo Milênio" loading="lazy">
+    <div><h3>Endereço</h3><address>R. Paim, 211 – Lj 19<br>Bela Vista, São Paulo – SP<br>01306-010</address></div>
+    <div><h3>Pedidos</h3><p>WhatsApp <a href="https://wa.me/5511962248186" target="_blank" rel="noopener">(11) 96224-8186</a><br>Tel. <a href="tel:+551131595191">3159-5191</a><br>Tel. <a href="tel:+551131515502">3151-5502</a></p></div>
+    <div><h3>Instagram</h3><p><a href="https://www.instagram.com/pizzaria_novomilenio/" target="_blank" rel="noopener">@pizzaria_novomilenio</a></p></div>
+    <p class="rodape-base">Pizzaria Novo Milênio · Delivery e retirada</p>
+  </div>
+</footer>
+
+<!-- Barra de pedido: aparece quando o botão do hero sai da tela; some no CTA final e durante a digitação -->
+<div class="barra" aria-hidden="true">
+  <p class="barra-txt"><small>Pedidos pelo WhatsApp</small><strong>(11) 96224-8186</strong></p>
+  <a class="btn btn-zap" href="https://wa.me/5511962248186" target="_blank" rel="noopener" tabindex="-1"><svg class="ico"><use href="#i-wa"/></svg>Pedir</a>
+</div>
+
+<script>
+/* Amostra copiada do cardápio — sem correções de nome, descrição ou preço. */
+var CARDAPIO={
+  salgadas:[
+    ["01","ABOBRINHA","Mussarela, Abobrinha e Alho","51,90","36,90"],
+    ["05","A MODA DA CASA","Frango Champigon, Molho, Catupiry e Milho","61,90","41,90"],
+    ["15","CALABRESA","Calabresa coberta com Cebola","43,90","31,90"],
+    ["17","CAMARÃO COM CATUPIRY","Camarão com Catupiry ou Mussarela","101,90","80,90"],
+    ["23","FRANGO ESPECIAL","Frango e Catupiry Original","61,90","46,90"],
+    ["27","MUSSARELA","Molho de Tomate e Mussarela","43,90","31,90"],
+    ["30","NAPOLITANA","Mussarela, Tomate e Parmesão","51,90","36,90"],
+    ["33","PEPPERONI","Mussarela, Pepperoni e Cebola","51,90","36,90"],
+    ["34","PAIM","Frango, Escarola e Palmito","51,90","36,90"]
+  ],
+  doces:[
+    ["50","BRIGADEIRO","Chocolate com Granulado","51,90","36,90"],
+    ["53","ROMEU E JULIETA","Queijo Branco e Goiabada","51,90","36,90"]
+  ],
+  bordas:[["01","CATUPIRY ORIGINAL","15,00"],["02","CHOCOLATE","15,00"],["03","MUSSARELA","15,00"]],
+  bebidas:[
+    ["Cachaça",[["01","SERRA LIMPA","50,00"],["02","RAINHA 350ML","25,00"]]],
+    ["Refrigerantes",[["01","COCA COLA ZERO 2LT","16,00"],["05","COCA COLA 2 LITROS","15,00"],["06","GUARANÁ LATA","7,00"],["12","ÁGUA 500ML","4,00"]]],
+    ["Cerveja",[["01","HEINEKEN 330ML","12,00"],["04","CORONA 330ML","12,00"]]],
+    ["Suco natural",[["01","SUCO DEL VALE UVA 1L","13,00"]]]
+  ]
+};
+var TITULO={salgadas:["Pizzas salgadas","01 a 48"],doces:["Pizzas doces","49 a 55"],bordas:["Borda recheada","3 opções"],bebidas:["Bebidas",""]};
+
+function esc(s){return String(s).replace(/[&<>"]/g,function(c){return{"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]})}
+function norm(s){return s.normalize("NFD").replace(/[̀-ͯ]/g,"").toLowerCase()}
+function realce(txt,termos){
+  if(!termos.length)return esc(txt);
+  var mapa=[],n="";
+  for(var i=0;i<txt.length;i++){var c=norm(txt[i]);for(var k=0;k<c.length;k++){n+=c[k];mapa.push(i)}}
+  var m=new Array(txt.length).fill(false);
+  termos.forEach(function(t){var p=n.indexOf(t);while(p>-1){for(var j=p;j<p+t.length;j++)m[mapa[j]]=true;p=n.indexOf(t,p+t.length)}});
+  var o="",a=false;
+  for(var x=0;x<txt.length;x++){if(m[x]&&!a){o+="<mark>";a=true}if(!m[x]&&a){o+="</mark>";a=false}o+=esc(txt[x])}
+  return o+(a?"</mark>":"");
+}
+function pizza(p,t,numMarcado){
+  return '<li class="pizza"><span class="pizza-n">'+(numMarcado?'<mark>'+p[0]+'</mark>':p[0])+'</span>'+
+    '<div class="pizza-txt"><h4 class="pizza-nome">'+realce(p[1],t)+'</h4><p class="pizza-desc">'+realce(p[2],t)+'</p></div>'+
+    '<div class="precos"><span class="preco g"><small>Grande</small><strong><span class="rs">R$</span>'+p[3]+'</strong></span>'+
+    '<span class="preco b"><small>Broto</small><strong><span class="rs">R$</span>'+p[4]+'</strong></span></div></li>';
+}
+function simples(i,t,grupo){
+  return '<li class="simples"><span class="pizza-n">'+i[0]+'</span><span class="simples-nome">'+realce(i[1],t)+(grupo?'<small>'+esc(grupo)+'</small>':'')+'</span><span class="simples-val"><span class="rs">R$</span>'+i[2]+'</span></li>';
+}
+function cab(titulo,sub){return '<div class="lista-cab"><h3>'+esc(titulo)+'</h3>'+(sub?'<span>'+esc(sub)+'</span>':'')+'</div>'}
+
+var lista=document.getElementById("lista"),status=document.querySelector(".status"),q=document.getElementById("q"),caixa=q.parentNode,atual="salgadas";
+
+function mostra(cat){
+  var h=cab(TITULO[cat][0],TITULO[cat][1]);
+  if(cat==="salgadas"||cat==="doces")h+='<ul>'+CARDAPIO[cat].map(function(p){return pizza(p,[])}).join("")+'</ul>';
+  if(cat==="bordas")h+='<ul>'+CARDAPIO.bordas.map(function(i){return simples(i,[])}).join("")+'</ul>';
+  if(cat==="bebidas")h+=CARDAPIO.bebidas.map(function(g){return '<p class="subgrupo">'+esc(g[0])+'</p><ul>'+g[1].map(function(i){return simples(i,[])}).join("")+'</ul>'}).join("");
+  lista.innerHTML=h;status.textContent="";
+}
+function marca(cat){document.querySelectorAll(".cat").forEach(function(b){b.setAttribute("aria-pressed",b.dataset.cat===cat?"true":"false")})}
+function busca(v){
+  var t=v.trim();
+  if(!t){mostra(atual);marca(atual);return}
+  marca(null);
+  var h="",total=0;
+  if(/^\d{1,2}$/.test(t)){
+    var alvo=t.padStart(2,"0");
+    var ps=CARDAPIO.salgadas.concat(CARDAPIO.doces).filter(function(p){return p[0]===alvo||p[0].indexOf(t)===0});
+    total=ps.length;
+    if(total)h=cab("Sabor nº "+t,"")+'<ul>'+ps.map(function(p){return pizza(p,[],true)}).join("")+'</ul>';
+  }else{
+    var termos=norm(t).split(/\s+/).filter(Boolean);
+    var ok=function(s){var n=norm(s);return termos.every(function(x){return n.indexOf(x)>-1})};
+    var ps2=CARDAPIO.salgadas.concat(CARDAPIO.doces).filter(function(p){return ok(p[1]+" "+p[2])});
+    var outros=[];
+    CARDAPIO.bordas.forEach(function(i){if(ok(i[1]))outros.push([i,"Borda recheada"])});
+    CARDAPIO.bebidas.forEach(function(g){g[1].forEach(function(i){if(ok(i[1]))outros.push([i,g[0]])})});
+    total=ps2.length+outros.length;
+    if(ps2.length)h+=cab("Pizzas","")+'<ul>'+ps2.map(function(p){return pizza(p,termos)}).join("")+'</ul>';
+    if(outros.length)h+='<p class="subgrupo">Bordas e bebidas</p><ul>'+outros.map(function(x){return simples(x[0],termos,x[1])}).join("")+'</ul>';
+  }
+  if(!total){h='<div class="vazio"><p>Nada encontrado para “'+esc(t)+'”.</p><p>Tente o número do sabor (01 a 55), o nome ou um ingrediente. Nesta amostra há só alguns itens; na versão final a busca cobre o cardápio inteiro.</p></div>';status.textContent=""}
+  else status.innerHTML='<strong>'+total+'</strong> '+(total===1?"resultado":"resultados")+' para “'+esc(t)+'”';
+  lista.innerHTML=h;
+}
+function topoDoCardapio(){
+  var corpo=document.querySelector(".corpo");
+  var desk=window.matchMedia("(min-width:960px)").matches;
+  var y=corpo.getBoundingClientRect().top+window.scrollY-(desk?parseInt(getComputedStyle(document.documentElement).getPropertyValue("--topo"),10)+8:0);
+  if(window.scrollY>y+2||window.scrollY<y-400)window.scrollTo({top:y});
+}
+q.addEventListener("input",function(){caixa.classList.toggle("com-texto",!!q.value);busca(q.value)});
+document.querySelector(".limpar").addEventListener("click",function(){q.value="";caixa.classList.remove("com-texto");busca("");q.focus()});
+document.querySelectorAll(".cat").forEach(function(b){b.addEventListener("click",function(){
+  atual=b.dataset.cat;q.value="";caixa.classList.remove("com-texto");mostra(atual);marca(atual);topoDoCardapio();
+})});
+mostra("salgadas");
+
+/* Barra de pedido */
+(function(){
+  var barra=document.querySelector(".barra"),s={hero:true,fim:false,dig:false};
+  function at(){barra.classList.toggle("on",!s.hero&&!s.fim&&!s.dig)}
+  if(!("IntersectionObserver" in window)){barra.classList.add("on");return}
+  var io=new IntersectionObserver(function(es){es.forEach(function(e){
+    if(e.target.hasAttribute("data-cta-hero"))s.hero=e.isIntersecting;
+    if(e.target.hasAttribute("data-cta-final"))s.fim=e.isIntersecting;
+  });at()});
+  document.querySelectorAll("[data-cta-hero],[data-cta-final]").forEach(function(el){io.observe(el)});
+  q.addEventListener("focus",function(){s.dig=true;at()});
+  q.addEventListener("blur",function(){s.dig=false;at()});
+})();
+
+/* Notas da proposta */
+(function(){
+  var b=document.getElementById("bt-notas"),r=document.documentElement;
+  var p=new URLSearchParams(location.search);if(p.get("notas")==="0")r.dataset.notas="0";
+  function s(){b.setAttribute("aria-pressed",r.dataset.notas==="1"?"true":"false")}
+  b.addEventListener("click",function(){r.dataset.notas=r.dataset.notas==="1"?"0":"1";s()});s();
+})();
+</script>
+</body>
+</html>
