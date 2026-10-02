@@ -777,13 +777,32 @@ html.mt-aberto{overflow:hidden}
 }
 
 /* Etapa 10 — botões de entrada "Montar meu pedido": textos mais longos que o antigo "Pedir"
-   não podem espremer o texto ao lado nem quebrar o telefone no celular */
+   não podem espremer o texto ao lado (barra do celular: ver Etapa 11) */
 @media (max-width:479px){
   .fim-lista{flex-wrap:wrap;row-gap:8px}
   .fim-lista p{flex:1 1 220px}
 }
-.barra-txt strong{white-space:nowrap}
-@media (max-width:359px){
-  .barra-txt strong{font-size:14.5px}
-  .barra .btn{padding:0 12px;font-size:14px}
+
+/* =====================================================================
+   ETAPA 11 — LARGURA CONSISTENTE NO CELULAR
+   Causa: com a fonte real (Archivo larga/semi-larga), alguns conteúdos
+   que não quebram linha ficavam mais largos que a tela — principalmente a
+   linha de preços + "Escolher" de cada pizza (flex sem quebra dentro de uma
+   coluna de grid "1fr", que não encolhe abaixo do conteúdo), o @ do Instagram
+   em "Onde estamos" e o título da banda do cardápio. O celular então
+   alarga a página e reduz o zoom: o cardápio parecia ocupar a tela toda e as
+   outras seções pareciam mais estreitas, com uma faixa vazia ao lado.
+   Correção: colunas que podem encolher (minmax(0,1fr)) e quebra de linha
+   apenas quando o conteúdo não cabe. Nada muda a partir de 768px.
+   ===================================================================== */
+@media (max-width:767px){
+  .pizza{grid-template-columns:40px minmax(0,1fr)}
+  .precos{flex-wrap:wrap;row-gap:8px}
+  .banda .wrap{flex-wrap:wrap}
+  .local .wrap{grid-template-columns:minmax(0,1fr)}
+  .endereco{grid-template-columns:minmax(0,1fr) auto}
+  .contatos a,.contatos .contato-horario{flex-wrap:wrap;column-gap:12px;row-gap:2px}
+  .contatos a strong{margin-left:auto;min-width:0;overflow-wrap:anywhere}
+  .barra-txt strong{font-size:min(16px,4.1vw)}
+  .barra .btn{padding:0 min(18px,3.4vw);font-size:min(15px,3.9vw)}
 }
